@@ -43,14 +43,30 @@
 		is enabled. If the SSH Server isn't active, you must start it with "service ssh start". To stop it, if needed, you can run "service ssh stop" 
 		- it will be stopped until next reboot. To turn SSH off indefinitely, use "systemctl disable ssh";
 	-To change the port for SSH Server (the default port is 22), open the file /etc/ssh/sshd_config (you can run the command "vi /etc/ssh/sshd_config",
-		there will be no need to download vim). Find the line "#Port 22" and replace it with "Port 4242" without hash symbol. Save the changes in file;
+		there will be no need to download vim). Find the line "#Port 22" and replace it with "Port 4242" without hash symbol. Do the same in the file
+		/etc/ssh/ssh_config. Additionally, find the line with "PermitRootLogin ..." and set this permission to "no" that it looks like 
+		"#PermitRootLogin no". Save the changes in file;
 	-To update the port you need to restart the SSH server. To do it, run "service ssh restart". You can run the command "systemctl status ssh" to check
 		that the port is changed: in the line with "Server listening on :: ..." there must be the port 4242 instead of 22";
+	-To verify the changes of accessing for root user, run this line "ssh root@amelniko42 -p 4242". After entering the password, the output must be
+		"Permission denied ...";
 	
+8. Install and configure Firewall for SSH server
+	-To install the firewall UFW, run the command "apt-get install ufw";
+	-To activate the firewall, you need to use command "ufw enable". To check the status of the firewall, you can use "ufw status numbered" - the output must be
+		"Status: active";
+	-To allow SSH access for Firewall via port 4242, run "ufw allow 4242";
+	-To see the available streams, use the command "ufw status". There the ports will be listed as well as the level of incoming access. If there are additional
+		ports besides 4242, you can remove those rules from the list: for this, run the command "ufw status numbered" to see the numbers of rules, then use
+		"ufw delete [number]" specifying the number of rule which needs to be deleted;
+	-Best practice is to run additionally the commands for default connections: incoming and outgoing. To set up rules for default connections, run
+		"ufw default ... incoming/outgoing" - ... replace with the access rule (deny for incoming and allow for outgoing);
 
-8. 
-
-9. 
+9. Configure the SUDO group with requirements
+	-Create a directory for logging actions there, both inputs and outputs - use "su -" to return to the default directory and create a directory /var/log/sudo/;
+	-To add local rules for SUDO, we need to create a separate file in /etc/sudoers.d/ directory. Create a file "sudo_config" there - next steps will describe
+		changes of that file;
+	-To limit authentication using sudo with 3 attempts, add the line "Defaults 
 
 10. 
 

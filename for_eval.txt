@@ -24,6 +24,27 @@
         The most basic use of SSH is to connect to a remote host for a terminal session.
         By default, port 22 is used to establish an SSH connection. This port is automatically configured during the installation of your operating system.
         To reduce the number of brute force attacks, you can configure another port for SSH access.
+        For security reasons, logging into the SSH server directly as the root user should be disabled. This is to prevent unauthorized access to the system 
+            with full administrative privileges, which can be risky if the root password is compromised.
     HOW TO CONNECT TO A SERVER USING SSH?
-        
+
+    FIREWALL FOR SSH SERVER
+        A firewall is a network security device that monitors incoming and outgoing network traffic and decides whether to allow or block specific traffic 
+            based on a defined set of security rules.
+        Configuring the firewall for SSH is an essential step when enabling SSH because it ensures SSH traffic is allowed through the firewall. In some cases,
+            firewalls block incoming connections to the system as a security measure. Therefore, to allow SSH connections from other machines, configure the
+            firewall to permit SSH traffic.
+        Firewall rules are the major components of firewall policies that determine which types of traffic your firewall allows in and out of your network, 
+            and which are blocked.
+        In the list of available UFW rules for firewall there is a notation (v6) which refers to IPv6 type of addresses; if there is no notation for rule, then
+            it it applied for IPv4 addresses. IPv4 addresses are composed of four octets, each ranging from 0 to 255, separated by periods (dots). An example of 
+            an IPv4 address is "192.168.1.1". IPv6 addresses are composed of eight groups of four hexadecimal digits, separated by colons. An example of an IPv6 
+            address is "2001:0db8:85a3:0000:0000:8a2e:0370:7334" - they can often be shortened by omitting leading zeros and by using :: to represent consecutive 
+            groups of zeroes.
+    CONFIGURATION OF SUDOERS FILE
+        The sudoers policy plugin determines a user's sudo privileges.
+        In the sudoers file, the keyword Defaults is used to set default configuration options for the sudo command. These options apply globally to all users 
+            and groups unless overridden by specific user or group settings. The Defaults keyword allows you to specify various security, logging, and behavioral 
+            options for sudo.
+
     
