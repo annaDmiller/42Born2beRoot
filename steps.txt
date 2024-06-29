@@ -21,7 +21,8 @@
 		reverted back. To verify the changes, run the command "hostname";
 	-If you need to change the hostname permanently, you should use the command "hostnamectl set-hostname new_name". To verify the changes, run the 
 		command "hostnamectl" which shows the system information - the hostname is written in line with Static hostname (can be run only if there is 
-		a systemd files);
+		a systemd files; if no - "apt-get install systemd"). To check the hostname after reboot, run "systemctl reboot";
+	-Another option to change the hostname permanently ...
 
 5. Create a new user (for evaluation)
 	-To create a new user, you should run the command "userad username";
@@ -66,8 +67,14 @@
 	-Create a directory for logging actions there, both inputs and outputs - use "su -" to return to the default directory and create a directory /var/log/sudo/;
 	-To add local rules for SUDO, we need to create a separate file in /etc/sudoers.d/ directory. Create a file "sudo_config" there - next steps will describe
 		changes of that file;
-	-To limit authentication using sudo with 3 attempts, add the line "Defaults 
+	-To limit authentication using sudo with 3 attempts, add the line "Defaults passwd_tries=3"
+	-To create a custom message which appears after typing incorrect password, add "Defaults badpass_message="...";
+	-To make the system log the sudo actions, several line must be added: "Defaults logfile="var/log/sudo/sudo_config", "Defaults log_input, log_output";
+	-To enable TTY mode (When this flag is set, sudo can only run from a login session and not via other means such as cron, shell/perl/python, or cgi-bin scripts.),
+		add "Defaults requiretty";
+	-To set up the path, the line "Defaults secure_path="..."" can be added - it's used as PATH environment variable for the commands you run using sudo . That means, 
+		when you run (e.g. sudo apt update), the system will try to look up the command apt in the directories specified in the secure_path , in the specified order;
 
-10. 
+10. Configure password policy
 
  
