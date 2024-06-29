@@ -1,0 +1,57 @@
+1. Download SUDO
+	-You can check whether SUDO is installed by the command "sudo -V";
+	-To download the SUDO, you need to use to command "apt-get install sudo" but to do it, you need to switch to the root user;
+	-To switch to the root user, run the command "su -". SU command is used to switch between users: generally you run it in the way "su username" but 
+		if username isn't typed, the Linux process it in the way to switch you to the root user (default). However, this can lead to that not all the 
+		bash-files are found;
+
+2. Add the user to groups (not root one)
+	-Switch to the root user;
+	-Run the command "usermod -aG sudo username" to do it. -G option is used to define the group and -a option is used to add the user to the group 
+		(used only with -G). After the options the name of the group is determined, and last argument is the username of the user;
+	-To check which users are part of the group, the command "getent group groupname";
+	-To check to which groups the user is assigned, the command "groups username" must be used;
+
+3. Create a user42 group
+	-To create the user groups, you must run the command "groupadd groupname";
+	-Follow the step 2 once more to add the user to the user42 group;
+
+4. Change of hostname (for evaluation)
+	-If you need to change the hostname temporarily, you can use the command "hostname new_name". After the reboot of the system, the change will be 
+		reverted back. To verify the changes, run the command "hostname";
+	-If you need to change the hostname permanently, you should use the command "hostnamectl set-hostname new_name". To verify the changes, run the 
+		command "hostnamectl" which shows the system information - the hostname is written in line with Static hostname (can be run only if there is 
+		a systemd files);
+
+5. Create a new user (for evaluation)
+	-To create a new user, you should run the command "userad username";
+	-To be able to log in as the new user, you must set up the user's password. It can be achieved by the command "passwd username";
+	-On the step of creating user, it can be assigned to the groups with option -G after which you must list the groups to which it should be added, 
+		separated by comma;
+	-For temporary users, you can use the option -e to set up the expiration date of the user in the format YYYY-MM-DD. For example, 
+		"useradd -e 2024-06-30 username";
+
+6. Add the possibility for user to use "sudo" (if the step 2 is done for sudo group, then there is no general need of it)
+	-To be able to use "sudo", user must be added to the list of sudoers in suders.tmp file. To open that file, run the command "sudo visudo";
+	-Find the line where it is written "# User privilege specification". By default, after that line, only the root user mentioned;
+	-Add your user under the root user in the format "username ALL=(ALL:ALL) ALL";
+	-However, by default there is a possibility to use SUDO for users added to sudo group (see the line "# Allow members of group sudo t execute any command"); 
+
+7. Set up the SSH server (description of SSH read in for_eval.txt)
+	-To download the SSH Server, run the command "apt install openssh-server" as a root user or "sudo apt install openssh-server" as a user;
+	-To check the SSH service status, use the command "systemctl status ssh". The Active line must conatin value: "active(running)" - the SSH Service 
+		is enabled. If the SSH Server isn't active, you must start it with "service ssh start". To stop it, if needed, you can run "service ssh stop" 
+		- it will be stopped until next reboot. To turn SSH off indefinitely, use "systemctl disable ssh";
+	-To change the port for SSH Server (the default port is 22), open the file /etc/ssh/sshd_config (you can run the command "vi /etc/ssh/sshd_config",
+		there will be no need to download vim). Find the line "#Port 22" and replace it with "Port 4242" without hash symbol. Save the changes in file;
+	-To update the port you need to restart the SSH server. To do it, run "service ssh restart". You can run the command "systemctl status ssh" to check
+		that the port is changed: in the line with "Server listening on :: ..." there must be the port 4242 instead of 22";
+	
+
+8. 
+
+9. 
+
+10. 
+
+ 

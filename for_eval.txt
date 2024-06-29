@@ -1,0 +1,29 @@
+1. aptitude and apt
+    WHAT IS APT (Advanced Package Tool)
+        It's a free and open source software which handles software installation and removal. Initially it was designed by Debian. It's a low-level package manager.
+        apt is command line without GUI (Graphical User Interface).
+        Whenever it is invoked with the specified name of package to install, it finds the package in configured list of sources specified in "/etc/apt/sources.list"
+            along with the list of dependencies for that package and automatically installs those dependencies along with the current package.
+    
+    WHAT IS APTITUDE
+        It is a front-end to to APT which adds UI to the functionality. So it is a higher-level package manager.
+
+    WHAT IS THE DEFFERENCE BETWEEN APT AND APTITUDE
+        APTITUDE is vaster in functionality as it includes functionalities of apt-get, apt-mark and apt-cache (apt-get - to install, apt-mark - to mark the package
+            in different ways, apt-cache - to interact with installed packages);
+        APTITUDE has a text-only and interactive UI;
+        APTITUDE has better package management (it can suggest possible measures to solve conflicts, it can show why certain actions are blocked or why an action
+            must be taken, etc.)
+
+
+2. SSH (Secure Shell)
+    It is a network communication protocol which provides strong password authentication and public key authentication, as well as encrypted data communications
+        between two computers. The communication is encrypted. In addition to providing strong encryption, SSH is widely used by network administrators to manage
+        systems and applications remotely, enabling them to log in to another computer over a network, execute commands and move files from one computer to another.
+    HOW TO USE SSH?
+        The most basic use of SSH is to connect to a remote host for a terminal session.
+        By default, port 22 is used to establish an SSH connection. This port is automatically configured during the installation of your operating system.
+        To reduce the number of brute force attacks, you can configure another port for SSH access.
+    HOW TO CONNECT TO A SERVER USING SSH?
+        
+    
