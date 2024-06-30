@@ -21,8 +21,10 @@
 		reverted back. To verify the changes, run the command "hostname";
 	-If you need to change the hostname permanently, you should use the command "hostnamectl set-hostname new_name". To verify the changes, run the 
 		command "hostnamectl" which shows the system information - the hostname is written in line with Static hostname (can be run only if there is 
-		a systemd files; if no - "apt-get install systemd"). To check the hostname after reboot, run "systemctl reboot";
-	-Another option to change the hostname permanently ...
+		a systemd files; if no - "apt-get install systemd");
+	-To check that the systemd is installed, run "systemctl status". If running "hostnamectl" shows an error "Failed to connect to bus...", then you
+		need to activate the dbus by "systemctl start dbus". Try once more to run "hostnamectl";
+	-To check the hostname after reboot, run "systemctl reboot";
 
 5. Create a new user (for evaluation)
 	-To create a new user, you should run the command "userad username";
@@ -46,7 +48,7 @@
 	-To change the port for SSH Server (the default port is 22), open the file /etc/ssh/sshd_config (you can run the command "vi /etc/ssh/sshd_config",
 		there will be no need to download vim). Find the line "#Port 22" and replace it with "Port 4242" without hash symbol. Do the same in the file
 		/etc/ssh/ssh_config. Additionally, find the line with "PermitRootLogin ..." and set this permission to "no" that it looks like 
-		"#PermitRootLogin no". Save the changes in file;
+		"PermitRootLogin no" (remove hash symbol). Save the changes in file;
 	-To update the port you need to restart the SSH server. To do it, run "service ssh restart". You can run the command "systemctl status ssh" to check
 		that the port is changed: in the line with "Server listening on :: ..." there must be the port 4242 instead of 22";
 	-To verify the changes of accessing for root user, run this line "ssh root@amelniko42 -p 4242". After entering the password, the output must be
@@ -76,5 +78,33 @@
 		when you run (e.g. sudo apt update), the system will try to look up the command apt in the directories specified in the secure_path , in the specified order;
 
 10. Configure password policy
+	-Install the password quality checking library by "apt install libpam-pwquality";
+	-To set the number of days of expiration, open the /etc/login.defs file and change the value in the line with "PASS_MAX_DAYS ...";
+	-To set the number of days before modification of the password, in /etc/login.defs, in line with "PASS_MIN_DAYS ..." set the value 2;
+	-To set the number of days to receive the warning message, in /etc/login.defs, in the line with "PASS_WARN_AGE ..." check that the value is 7;
+	-Previous 3 rules must be set manually for the root user. Run the command "chage -l root" to check current settings. Use the command "chage -m 2 root" and
+		"chage -M 30 root" for the settings (-M - for maximum days of expiration, -m - for minimum days before modification);
+	-To set the minimum password length, in /etc/security/pwquality.conf, set "minlen = 10" and remove hash-symbol;
+	-To set the requirements for the uppercase and lowercase symbols and digits in the password, in /etc/security/pwquality.conf set "dcredit = 1", 
+		"ucredit = -1" and "lcredit = -1" removing has symbols for all lines. The value of -1 means that the password must contain AT MINIMUM 1 digit, 
+		1 uppercase and 1 lowercase symbols;
+	-To set the limit for number of consecutive identical chars, in /etc/security/pwquality.conf set "maxrepeat = 3" removing hash symbol;
+	-To restrict usage of username in password, in /etc/security/pwquality.conf remove has symbol on line with "usercheck = 1";
+	-To set the restriction of how much characters in the new password must not be present in the old one, in /etc/security/pwquality.conf set "difok = 7".
+		Note that root is not asked for an old password so the checks that compare the old and new password are not performed so this rule isn't applied for
+		root user automatically;
+	-To make the root password be aligned with the policy, in /etc/security/pwquality.conf remove hash symbol in line with "enforce_for_root";
 
- 
+11. Connect to virtual machine via SSH
+	-Set up the port forwrding to be able to connect via 4242 port: in VirtualMachine app for your VM click on Settings -> open the settings of Network ->
+		-> unfold the Avanced section -> click on Port forwarding -> Add new port with Host Post equal to 4241 and Guest Post equal to 4242 (usually both values
+		must be equal but if you are trying to connect from school, 4242 port is booked by our school);
+	-To connect via SSH from our Terminal, use the command "ssh <user>@localhost -p 4242" where <user> - username of the user in VM which we are trying to
+		log in under;
+
+12. Check of SUDO logs
+	-As the user (not root), run any command with "sudo ...";
+	-Switch to root user and check the content of the log /var/log/sudo/sudo_config - the run by user command must be listed in the log;
+
+13. Script
+	

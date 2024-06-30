@@ -47,4 +47,9 @@
             and groups unless overridden by specific user or group settings. The Defaults keyword allows you to specify various security, logging, and behavioral 
             options for sudo.
 
+3. Debian OS
+
+4. APPArmor
+
+5. For Script
     
