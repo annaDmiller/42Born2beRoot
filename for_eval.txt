@@ -52,4 +52,4 @@
 4. APPArmor
 
 5. For Script
-    
+    Script is a sequence of commands which will run when we execute the file (all the commands are stored in a file).

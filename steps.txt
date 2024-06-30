@@ -107,4 +107,6 @@
 	-Switch to root user and check the content of the log /var/log/sudo/sudo_config - the run by user command must be listed in the log;
 
 13. Script
-	
+	-Move to the directory /usr/local/bin and create there file "monitoring.sh". After that, open the file;
+	-Add the standard line #!/bin/bash to make the file a script;
+	-
