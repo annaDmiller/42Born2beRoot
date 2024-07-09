@@ -109,4 +109,8 @@
 13. Script
 	-Move to the directory /usr/local/bin and create there file "monitoring.sh". After that, open the file;
 	-Add the standard line #!/bin/bash to make the file a script;
-	-
+	-The command to retrieve architecture information and kernel - "uname -a" (print system information; -a - print all info);
+	-The command to take the info about the number of physical cores - "cat /proc/cpuinfo | grep "physical id" | uniq | wc -l"
+		(cat - to open the file with logical CPU with a unique processor number; grep - to list only the lines with the mentioned string;
+		uniq - the shorten the list for only unique lines; wc -l - to show the amount of newlines in the list);
+	-The command to take the info about the number of virtual cores - 
