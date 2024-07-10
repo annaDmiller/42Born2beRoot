@@ -113,4 +113,11 @@
 	-The command to take the info about the number of physical cores - "cat /proc/cpuinfo | grep "physical id" | uniq | wc -l"
 		(cat - to open the file with logical CPU with a unique processor number; grep - to list only the lines with the mentioned string;
 		uniq - the shorten the list for only unique lines; wc -l - to show the amount of newlines in the list);
-	-The command to take the info about the number of virtual cores - 
+	-The command to take the info about the number of virtual cores - "nproc" (nproc - print the number of processing units available)
+		or by "cat /proc/cpuinfo | grep processor | uniq | wc -l" as the one for the previous part;
+	-The command to show the available RAM - "free | awk '$1=="Mem:" {print $4}'" (free - display amount of free and used memory in system;
+		awk - pattern scanning and text processing; $1=="Mem:" retrieves only the lines which has $1 value of "Mem:"; {print $4} means to
+		print the 4th element of the line);
+	-The command to get the size of RAM = "free | awk '$1=="Mem:" {print $2}'";
+	-To show the percentage of utilization of the RAM - (Total RAM - Free RAM)/Total RAM;
+	-
