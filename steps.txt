@@ -115,9 +115,25 @@
 		uniq - the shorten the list for only unique lines; wc -l - to show the amount of newlines in the list);
 	-The command to take the info about the number of virtual cores - "nproc" (nproc - print the number of processing units available)
 		or by "cat /proc/cpuinfo | grep processor | uniq | wc -l" as the one for the previous part;
-	-The command to show the available RAM - "free | awk '$1=="Mem:" {print $4}'" (free - display amount of free and used memory in system;
-		awk - pattern scanning and text processing; $1=="Mem:" retrieves only the lines which has $1 value of "Mem:"; {print $4} means to
-		print the 4th element of the line);
-	-The command to get the size of RAM = "free | awk '$1=="Mem:" {print $2}'";
-	-To show the percentage of utilization of the RAM - (Total RAM - Free RAM)/Total RAM;
-	-
+	-The command to show the available RAM - "free --mega | awk '$1=="Mem:" {print $4}'" (free - display amount of free and used memory in system;
+		--mega - to show the memory in MB; awk - pattern scanning and text processing; $1=="Mem:" retrieves only the lines which has $1 value of
+		"Mem:"; {print $4} means to	print the 4th element of the line);
+	-The command to show the percentage of utilization of the RAM - "free --mega | awk '$1=="Mem:" {printf("%.2f", $3/$2*100)}'";
+	-The command to show the available storage - "df -m | grep "/dev/ | grep -v "boot" | awk '{sum_av += $4} END {print sum_av}'"
+		(df - disk-free - to show the available and used staorage of machine; -m flag to show it in MB; grep "/dev/" is done because
+		the rest filesystems are not the storage for files on the machine: tmpfs - this is the temporary storage which doesn't save the
+		file directly on machine and udev - the filesystem of Kernel; -v flag to remove the line which contains the string; "boot" - we
+		remove this line because in that directory the files for booting of machine are stored only; {sum_av ...} - to calculate the total
+		available storage; END - this is the command to run at the very end processing lines);
+	-The command to show the percentage of utilization of the storage - "df -m | grep "/dev/" | grep -v "boot" | awk '{sum_av += $4} {sum_us += $3}
+		END {printf("%.2f", 100*sum_us/(sum_us + sum_av))}'";
+	-The command to show the utilization of CPU - "vmstat | tail --lines=1 | awk '{printf("%.1f", 100 - $15)}'" (vmstat - to report of virtual
+		memory statistics; tail - to output last parts; --lines=1 - to output 1 last line; $15 - the percentage of time spent idle);
+	-The command to show the date-time of last reboot - "who -b | awk '{print $3 " " $4}'" (who - to show who is logged on; -b - tyme of last system
+		boot);
+	-The command to show whether LVM is active - "if [ $(lsblk | grep lvm | wc -l) -ne 0 ]; then echo yes; else echo no; fi" (if [] - if statement in
+		bash script; -ne - corresponds to "not equal"; lsblk - to list dlock devices; fi - to finish the if-else statement in bash script);
+	-The command to show the number of active connections - "";
+	-The command to show the number of users using the server - "";
+	-The command to show IPv4 address of server and its MAC - "";
+	-The command to show the number of commands executed with sudo - "";
