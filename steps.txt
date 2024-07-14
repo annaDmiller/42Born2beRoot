@@ -133,7 +133,14 @@
 		boot);
 	-The command to show whether LVM is active - "if [ $(lsblk | grep lvm | wc -l) -ne 0 ]; then echo yes; else echo no; fi" (if [] - if statement in
 		bash script; -ne - corresponds to "not equal"; lsblk - to list dlock devices; fi - to finish the if-else statement in bash script);
-	-The command to show the number of active connections - "";
-	-The command to show the number of users using the server - "";
-	-The command to show IPv4 address of server and its MAC - "";
-	-The command to show the number of commands executed with sudo - "";
+	-The command to show the number of active connections - "ss -ta | grep ESTAB | wc -l" (ss - to investigate the sockets; -ta - flag for TCP 
+		(numeric) established connections; ESTAB - this is the status of established connections);
+	-The command to show the number of users using the server - "users | wc -w" (users - to print the username of users currently logged in the
+		system; -w - flag to count the words);
+	-The command to show IPv4 address of server and its MAC - "hostname -I" for IPv4 (hostname - to show the system's host name; -I - flag to display
+		all network addresses of the host) and "ip link | grep "link/ether" | awk '{print $2}'" for MAC (ip - to show / manipulate
+		routing, network devices, interfaces and tunnels; link - network device);
+	-The command to show the number of commands executed with sudo - "jourtnalctl _COMM=sudo | grep COMMAND | wc -l" (journalctl - to query the systemd
+		journal; _COMM - match for the executable script name; COMMAND - as we need to count the command only (open and closing of root session is
+		liste too in the log));
+	-
